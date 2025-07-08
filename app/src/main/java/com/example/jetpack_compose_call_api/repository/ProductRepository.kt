@@ -1,5 +1,6 @@
 package com.example.jetpack_compose_call_api.repository
 
+import android.util.Log
 import com.example.jetpack_compose_call_api.model.Product
 import com.example.jetpack_compose_call_api.network.ApiService
 import com.google.gson.Gson
@@ -32,10 +33,12 @@ class ProductRepository(private val apiService: ApiService) {
                     // nên chúng ta cần lấy ra mảng "products"
                     val jsonObject = gson.fromJson(jsonString, JsonObject::class.java)
                     val productJsonArray = jsonObject.getAsJsonArray("products")
+                    Log.d("frank", "getProducts: $productJsonArray")
 
                     // Chuyển đổi JsonArray thành List<Product>
                     val productListType = object : TypeToken<List<Product>>() {}.type
                     val products: List<Product> = gson.fromJson(productJsonArray, productListType)
+                    Log.d("frank", "getProducts: $products")
 
                     // Thành công: phát ra dữ liệu
                     emit(UiState.Success(products))
